@@ -20,7 +20,7 @@ layer {
     mean_value: 123
   }
   data_param {
-    source: "examples/imagenet/ilsvrc12_train_lmdb"
+    source: "path/to/train_lmdb"
     batch_size: 32 #*iter_size
     backend: LMDB
   }
@@ -40,7 +40,7 @@ layer {
     mean_value: 123
   }
   data_param {
-    source: "examples/imagenet/ilsvrc12_val_lmdb"
+    source: "path/to/val_lmdb"
     batch_size: 25 #not *iter_size
     backend: LMDB
   }
@@ -628,10 +628,18 @@ layer {
   }
 }
 layer {
-  name: "conv10"
+  name: "conv10_new"
   type: "Convolution"
   bottom: "fire9/concat"
-  top: "conv10"
+  top: "conv10_new"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
   convolution_param {
     num_output: 1000
     pad: 1
@@ -646,13 +654,13 @@ layer {
 layer {
   name: "relu_conv10"
   type: "ReLU"
-  bottom: "conv10"
-  top: "conv10"
+  bottom: "conv10_new"
+  top: "conv10_new"
 }
 layer {
   name: "pool10"
   type: "Pooling"
-  bottom: "conv10"
+  bottom: "conv10_new"
   top: "pool10"
   pooling_param {
     pool: AVE

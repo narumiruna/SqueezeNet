@@ -520,10 +520,10 @@ layer {
   }
 }
 layer {
-  name: "conv10"
+  name: "conv10_new"
   type: "Convolution"
   bottom: "fire9/concat"
-  top: "conv10"
+  top: "conv10_new"
   convolution_param {
     num_output: 1000
     kernel_size: 1
@@ -532,13 +532,13 @@ layer {
 layer {
   name: "relu_conv10"
   type: "ReLU"
-  bottom: "conv10"
-  top: "conv10"
+  bottom: "conv10_new"
+  top: "conv10_new"
 }
 layer {
   name: "pool10"
   type: "Pooling"
-  bottom: "conv10"
+  bottom: "conv10_new"
   top: "pool10"
   pooling_param {
     pool: AVE
